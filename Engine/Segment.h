@@ -21,4 +21,3 @@ public:
 	void rotate(rotates);
 	states getState(int, int);
 };
-

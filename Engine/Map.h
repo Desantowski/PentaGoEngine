@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+#include "Segment.h"
 #include "MainTypes.h"
 
 //Forward declaration
@@ -11,7 +11,7 @@ protected:
 	int mapSize;
 	int segmentSize;
 	std::vector<std::vector<states>> mainTab;
-	std::vector<std::vector<Segment*>> segments;
+	std::vector<std::vector<Segment>> segments;
 
 public:
 	/* Konstruktory */

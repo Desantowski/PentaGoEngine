@@ -9,11 +9,10 @@ Map::Map(int mSize, int sSize) : mapSize(mSize), segmentSize(sSize) {
 		row.resize(mapSize*segmentSize);
 
 	//Deklarowanie tablicy segmentow
-	segments.resize(mapSize);
 	for (int i = 0; i < mapSize; i++) {
-		segments[i].resize(mapSize);
+		segments.push_back(std::vector<Segment>());
 		for (int j = 0; j < mapSize; j++)
-			segments[i][j] = new Segment(*this, j * segmentSize, i * segmentSize);
+			segments[i].push_back(Segment(*this, j * segmentSize, i * segmentSize));
 	}
 }
 
@@ -21,7 +20,7 @@ Map::Map(int mSize, int sSize) : mapSize(mSize), segmentSize(sSize) {
 void Map::clear() {
 	for (auto& row : segments)
 		for (auto& item : row)
-			item->clear();
+			item.clear();
 }
 
 //Funkcja ustawiajaca stan slotu na mapie
@@ -46,7 +45,7 @@ bool Map::rotate(int x, int y, rotates dir) {
 	if (x > size || y > size) return false;
 	else {
 		//Wykonanie obrotu
-		segments[y][x]->rotate(dir);
+		segments[y][x].rotate(dir);
 		return true;
 	}
 }
