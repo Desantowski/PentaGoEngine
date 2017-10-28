@@ -1,19 +1,75 @@
 #include <iostream>
+#include <memory>
+#include <array>
 #include "Engine/Game.h"
-
-//Tymczasowy blok pisany na piechote
 #include "Engine/Player.h"
-class Human : public Player {
-public:
-	Human(Map& m, states s = states::clear) : Player(m, s) {}
-}; 
-class AI : public Player {
-public:
-	AI(Map& m, states s = states::clear) : Player(m, s) {}
-};
-//EOF: Tymczasowy blok
 
-//Testowy main
+
+void print(Game g)
+{
+	for (int i = 0; i < g.getSize(); i++) {
+		for (int j = 0; j < g.getSize(); j++) {
+			switch ((int)g.getState(j, i)) {
+			case 0:
+				std::cout << "   ";
+				break;
+			case 1:
+				std::cout << " B ";
+				break;
+			case 2:
+				std::cout << " W ";
+				break;
+			}
+			if (j < g.getSize() - 1) std::cout << "|";
+			else std::cout << std::endl;
+		}
+		if (i < g.getSize() - 1) for (int k = 0; k < g.getSize(); k++) std::cout << "--- ";
+		std::cout << std::endl;
+	}
+}
+
+int main()
+{
+	Game g;
+
+	int option;
+	std::cout << "1. Human vs AI\n2. Human vs human\nSelect option:";
+	std::cin >> option;
+	if (option == 1)
+	{
+		std::array<int, 5> xai{ 1, 1, 1, 1 , 1 };
+		std::array<int, 5> yai{ 0, 1, 2, 3, 4 };
+		int i = 0;
+		while (g.checkWin() == results::nowin)
+		{
+			// Ruch gracza
+			unsigned int x, y;
+			std::cin >> x >> y;
+			g.move(x, y);
+			print(g);
+
+			// Ruch AI
+			g.move(xai[i], yai[i]);
+			i++;
+			print(g);
+		}
+	}
+	else
+	{
+		while (g.checkWin() == results::nowin)
+		{
+			// Ruch gracza
+			unsigned int x, y;
+			std::cin >> x >> y;
+			g.move(x, y);
+			print(g);
+		}
+	}
+	std::cout << "Wynik: " << (int)g.checkWin() << std::endl;
+	system("PAUSE");
+}
+
+/*//Testowy main
 int main()
 {
 	//Inicjalizacja silnika gry
@@ -36,25 +92,6 @@ int main()
 	g.move(ai, 1, 4);
 
 	//Rysowanie planszy dla podgladu
-	for (int i = 0; i < g.getSize(); i++) {
-		for (int j = 0; j < g.getSize(); j++) {
-			switch ((int)g.getState(j, i)) {
-			case 0:
-				std::cout << "   ";
-				break;
-			case 1:
-				std::cout << " B ";
-				break;
-			case 2:
-				std::cout << " W ";
-				break;
-			}
-			if (j < g.getSize()-1) std::cout << "|";
-			else std::cout << std::endl;
-		}
-		if (i < g.getSize() - 1) for (int k = 0; k < g.getSize(); k++) std::cout << "--- ";
-		std::cout << std::endl;
-	}
 
 	//Sprawdzanie wyniku (3 to states::draw)
 	std::cout << "Oczekiwany wynik to 3\n";
@@ -62,4 +99,4 @@ int main()
 
 	system("PAUSE");
 	return 0;
-}
+}*/

@@ -1,6 +1,7 @@
 #pragma once
 #include "MainTypes.h"
 #include "Map.h"
+#include <algorithm> // std::pair
 
 class Player {
 protected:
@@ -18,6 +19,13 @@ public:
 	/* Metody uprzywilejowane */
 	states getState() const { return myState; };
 
-	/* Metody wirtualne */
-	//virtual void move() = 0;
+	bool move(int x, int y);
+};
+
+class AI : Player {
+public:
+	std::pair<int, int> calculatePosition()
+	{
+		return { 0, 0 }; // zwracamy pozycjê ruchu - po zaimplementowaniu AI
+	}
 };
